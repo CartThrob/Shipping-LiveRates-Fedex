@@ -409,75 +409,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
 			ini_set("soap.wsdl_cache_enabled", "0");
 		}	
 	}
- 	function get_shipping()
-	{
-		$cart_hash = $this->core->cart->custom_data('cart_hash'); 
- 		
- 		if ($this->core->cart->count() <= 0 || $this->core->cart->shippable_subtotal() <= 0)
-		{
-			return 0;
-		}
-		
- 		if ($cart_hash != $this->cart_hash())
-		{
-			$this->core->cart->set_custom_data('shipping_requires_update', $this->title ); 
-			$this->core->cart->save(); 
-		}
-		else
-		{
-			$this->core->cart->set_custom_data('shipping_requires_update', NULL ); 
-			$this->core->cart->save(); 
-		}
-		$shipping_data =$this->core->cart->custom_data(ucfirst(get_class($this)));
 
-	 	if(!$this->core->cart->shipping_info('shipping_option'))
-		{
-			$temp_key = FALSE; 
-			// if no option has been set, we'll get the cheapest option, and set that as the customer's shipping option. 
-			if (!empty($shipping_data['price']))
-			{
-				// this looks weird, but we're trying to get the key. we have to find the min value, then pull the key from that. 
-				$temp_key = array_search( min($shipping_data['price']), $shipping_data['price']); 
-			}
-			if ($temp_key !== FALSE && !empty($shipping_data['option_value'][$temp_key]))
-			{
-				$this->shipping_option =  $shipping_data['option_value'][$temp_key]; 
-				$this->core->cart->set_shipping_info("shipping_option",  $shipping_data['option_value'][$temp_key] ); 
-			}
-			else
-			{
-				$this->shipping_option =  $this->plugin_settings('product_id'); 
-				$this->core->cart->set_shipping_info("shipping_option", $this->plugin_settings('product_id')); 
-				
-			}
-		}
-		else
-		{
-			$this->shipping_option = $this->core->cart->shipping_info('shipping_option');
-		}
-		
-		
-		if (!empty($shipping_data['option_value']) && !empty($shipping_data['price']))
-		{
-			if ($this->shipping_option && in_array($this->shipping_option, $shipping_data['option_value']))
-			{
-				$key =array_pop(array_keys($shipping_data['option_value'], $this->shipping_option)); 
-				if (!empty($shipping_data['price'][$key]))
-				{                          
-					return $shipping_data['price'][$key]; 
-				}
-			}
-			elseif ( ! $this->shipping_option)
-			{
-				return 0;
-			}
-			else
-			{
-				return min($shipping_data['price']);
-			}
-		}
-		return 0;
-	}
  
 	function get_live_rates($option_value="ALL")
 	{
@@ -715,7 +647,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
 			{
 				$available_shipping['error_message'] .= " International shipping options may need to be added. "; 
 			}
-			$this->core->cart->set_custom_data("shipping_error", $shipping['error_message']); 
+			$this->core->cart->set_custom_data("shipping_error", $available_shipping['error_message']); 
 			
 		}
 		$this->core->cart->save(); 
@@ -723,6 +655,80 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
 		return $available_shipping;
 	}
 	// END
+	function get_shipping()
+	{
+		$cart_hash = $this->core->cart->custom_data('cart_hash'); 
+ 		
+ 		if ($this->core->cart->count() <= 0 || $this->core->cart->shippable_subtotal() <= 0)
+		{
+			return 0;
+		}
+		
+ 		if ($cart_hash != $this->cart_hash())
+		{
+			$this->core->cart->set_custom_data('shipping_requires_update', $this->title ); 
+			$this->core->cart->save(); 
+		}
+		else
+		{
+			$this->core->cart->set_custom_data('shipping_requires_update', NULL ); 
+			$this->core->cart->save(); 
+		}
+		
+		$shipping_data =$this->core->cart->custom_data(ucfirst(get_class($this)));
+		if (empty($shipping_data['option_value']) && empty($shipping_data['price']))
+ 		{
+			$shipping_data = $this->get_live_rates(); 
+		}
+	 	if(!$this->core->cart->shipping_info('shipping_option'))
+		{
+			$temp_key = FALSE; 
+			// if no option has been set, we'll get the cheapest option, and set that as the customer's shipping option. 
+			if (!empty($shipping_data['price']))
+			{
+				// this looks weird, but we're trying to get the key. we have to find the min value, then pull the key from that. 
+				$temp_key = array_search( min($shipping_data['price']), $shipping_data['price']); 
+			}
+			if ($temp_key !== FALSE && !empty($shipping_data['option_value'][$temp_key]))
+			{
+				$this->shipping_option =  $shipping_data['option_value'][$temp_key]; 
+				$this->core->cart->set_shipping_info("shipping_option",  $shipping_data['option_value'][$temp_key] ); 
+			}
+			else
+			{
+				$this->shipping_option =  $this->plugin_settings('product_id'); 
+				$this->core->cart->set_shipping_info("shipping_option", $this->plugin_settings('product_id')); 
+				
+			}
+		}
+		else
+		{
+			$this->shipping_option = $this->core->cart->shipping_info('shipping_option');
+		}
+		
+		
+		if (!empty($shipping_data['option_value']) && !empty($shipping_data['price']))
+		{
+			if ($this->shipping_option && in_array($this->shipping_option, $shipping_data['option_value']))
+			{
+				$key =array_pop(array_keys($shipping_data['option_value'], $this->shipping_option)); 
+				if (!empty($shipping_data['price'][$key]))
+				{                          
+					return $shipping_data['price'][$key]; 
+				}
+			}
+			elseif ( ! $this->shipping_option)
+			{
+				return 0;
+			}
+			else
+			{
+				return min($shipping_data['price']);
+			}
+		}
+		return 0;
+	}
+	
 	function build_faults($exception)
 	{
 		$errors = ""; 
