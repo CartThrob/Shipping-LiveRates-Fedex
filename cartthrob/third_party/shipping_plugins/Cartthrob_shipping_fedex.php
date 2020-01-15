@@ -40,8 +40,8 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'type' => 'radio',
             'default' => 'dev',
             'options' => [
-                    'dev' => 'dev',
-                    'live' => 'live',
+                'dev' => 'dev',
+                'live' => 'live',
             ],
         ],
 
@@ -52,8 +52,8 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'type' => 'radio',
             'default' => 'IN',
             'options' => [
-                    'IN' => 'Inches',
-                    'CM' => 'Centimeters',
+                'IN' => 'Inches',
+                'CM' => 'Centimeters',
             ],
         ],
         [
@@ -62,8 +62,8 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'type' => 'radio',
             'default' => 'LB',
             'options' => [
-                    'LB' => 'pounds',
-                    'KG' => 'kilograms',
+                'LB' => 'pounds',
+                'KG' => 'kilograms',
             ],
         ],
         [
@@ -257,7 +257,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_priority_overnight',
@@ -267,7 +267,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_standard_overnight',
@@ -277,7 +277,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_2_day',
@@ -287,7 +287,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_express_saver',
@@ -297,7 +297,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_first_overnight',
@@ -307,7 +307,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_ground_home_delivery',
@@ -317,7 +317,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_smart_post',
@@ -327,7 +327,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_international_economy',
@@ -337,7 +337,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_international_first',
@@ -347,7 +347,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_international_ground',
@@ -357,7 +357,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_international_priority',
@@ -367,7 +367,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
         [
             'name' => 'fedex_europe_first_international_priority',
@@ -377,25 +377,25 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
             'options' => [
                 'n' => 'no',
                 'y' => 'yes',
-                ],
+            ],
         ],
     ];
     public $required_fields = [];
     public $shipping_methods = [
-            'FEDEX_GROUND' => 'Ground',
-            'PRIORITY_OVERNIGHT' => 'Priority Overnight',
-            'STANDARD_OVERNIGHT' => 'Standard Overnight',
-            'FEDEX_2_DAY' => '2 Day',
-            'FEDEX_EXPRESS_SAVER' => 'Express Saver',
-            'FIRST_OVERNIGHT' => 'First Overnight',
-            'GROUND_HOME_DELIVERY' => 'Ground Home Delivery',
-            'SMART_POST' => 'Smart Post',
-            'INTERNATIONAL_ECONOMY' => 'International Economy',
-            'INTERNATIONAL_FIRST' => 'International First',
-            'INTERNATIONAL_GROUND' => 'International Ground',
-            'INTERNATIONAL_PRIORITY' => 'International Priority',
-            'EUROPE_FIRST_INTERNATIONAL_PRIORITY' => 'Europe First International Priority',
-        ];
+        'FEDEX_GROUND' => 'Ground',
+        'PRIORITY_OVERNIGHT' => 'Priority Overnight',
+        'STANDARD_OVERNIGHT' => 'Standard Overnight',
+        'FEDEX_2_DAY' => '2 Day',
+        'FEDEX_EXPRESS_SAVER' => 'Express Saver',
+        'FIRST_OVERNIGHT' => 'First Overnight',
+        'GROUND_HOME_DELIVERY' => 'Ground Home Delivery',
+        'SMART_POST' => 'Smart Post',
+        'INTERNATIONAL_ECONOMY' => 'International Economy',
+        'INTERNATIONAL_FIRST' => 'International First',
+        'INTERNATIONAL_GROUND' => 'International Ground',
+        'INTERNATIONAL_PRIORITY' => 'International Priority',
+        'EUROPE_FIRST_INTERNATIONAL_PRIORITY' => 'Europe First International Priority',
+    ];
 
     public function initialize()
     {
@@ -422,11 +422,11 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
         $client = new SoapClient($wsdl_path, ['trace' => 1]); // Refer to http://us3.php.net/manual/en/ref.soap.php for more information
 
         $shipping = [
-                'error_message' => null,
-                'price' => [],
-                'option_value' => [],
-                'option_name' => [],
-            ];
+            'error_message' => null,
+            'price' => [],
+            'option_value' => [],
+            'option_name' => [],
+        ];
         if (!$this->plugin_settings('access_key') || !$this->plugin_settings('account_number') || !$this->plugin_settings('password') || !$this->plugin_settings('meter_number')) {
             $shipping['error_message'] = $this->EE->lang->line('shipping_settings_not_configured');
             $this->core->cart->set_custom_data('shipping_error', $shipping['error_message']);
@@ -478,42 +478,42 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
 
         $request['RequestedShipment']['Shipper'] = [
             'Address' => [
-                    'StreetLines' => [
-                        $this->plugin_settings('origination_address'), $this->plugin_settings('origination_address2'),
-                    ],
-                    'City' => $this->plugin_settings('origination_city'),
-                    'StateOrProvinceCode' => $orig_state,
-                    'PostalCode' => $orig_zip,
-                    'CountryCode' => $this->EE->cartthrob_shipping_plugins->alpha2_country_code($orig_country_code),
-                    'Residential' => $orig_res_com,
+                'StreetLines' => [
+                    $this->plugin_settings('origination_address'), $this->plugin_settings('origination_address2'),
                 ],
-            ];
+                'City' => $this->plugin_settings('origination_city'),
+                'StateOrProvinceCode' => $orig_state,
+                'PostalCode' => $orig_zip,
+                'CountryCode' => $this->EE->cartthrob_shipping_plugins->alpha2_country_code($orig_country_code),
+                'Residential' => $orig_res_com,
+            ],
+        ];
 
         if ($option_value == 'SMART_POST') {
             $request['RequestedShipment']['SmartPostDetail'] = ['Indicia' => $this->plugin_settings('sp_indicia'),
-                                                                      'AncillaryEndorsement' => $this->plugin_settings('sp_ancillary_services'),
-                                                                      'HubId' => $this->plugin_settings('hubid'),
-                                                                      'CustomerManifestId' => date('md0B'), ];
+                'AncillaryEndorsement' => $this->plugin_settings('sp_ancillary_services'),
+                'HubId' => $this->plugin_settings('hubid'),
+                'CustomerManifestId' => date('md0B'), ];
         }
         $request['RequestedShipment']['Recipient'] = [
             'Address' => [
-                    'StreetLines' => [
-                        $this->EE->cartthrob_shipping_plugins->customer_location_defaults('address'), $this->EE->cartthrob_shipping_plugins->customer_location_defaults('address2'),
-                    ],
-                    'City' => $this->EE->cartthrob_shipping_plugins->customer_location_defaults('city', null),
-                    'StateOrProvinceCode' => $this->EE->cartthrob_shipping_plugins->customer_location_defaults('state', null),
-                    'PostalCode' => $this->EE->cartthrob_shipping_plugins->customer_location_defaults('zip', null),
-                    'CountryCode' => $this->EE->cartthrob_shipping_plugins->alpha2_country_code($this->EE->cartthrob_shipping_plugins->customer_location_defaults('country_code')),
-                    'Residential' => $destination_res_com,
-                    ],
-                ];
+                'StreetLines' => [
+                    $this->EE->cartthrob_shipping_plugins->customer_location_defaults('address'), $this->EE->cartthrob_shipping_plugins->customer_location_defaults('address2'),
+                ],
+                'City' => $this->EE->cartthrob_shipping_plugins->customer_location_defaults('city', null),
+                'StateOrProvinceCode' => $this->EE->cartthrob_shipping_plugins->customer_location_defaults('state', null),
+                'PostalCode' => $this->EE->cartthrob_shipping_plugins->customer_location_defaults('zip', null),
+                'CountryCode' => $this->EE->cartthrob_shipping_plugins->alpha2_country_code($this->EE->cartthrob_shipping_plugins->customer_location_defaults('country_code')),
+                'Residential' => $destination_res_com,
+            ],
+        ];
 
         $request['RequestedShipment']['ShippingChargesPayment'] = [
             'PaymentType' => 'SENDER',
             'Payor' => [
                 'AccountNumber' => $this->plugin_settings('account_number'),
                 'CountryCode' => $this->EE->cartthrob_shipping_plugins->alpha2_country_code($orig_country_code),
-                ],
+            ],
         ];
         $request['RequestedShipment']['RateRequestTypes'] = 'ACCOUNT';
 
@@ -526,18 +526,18 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
         $count = 0;
         foreach ($this->core->cart->items() as $key => $item) {
             $request['RequestedShipment']['RequestedPackageLineItems'][$count] =
-                    [
+                [
                     'Weight' => [
                         'Value' => (($item->weight() > 0 ? $item->weight() : 1) * $item->quantity()),
                         'Units' => $this->plugin_settings('weight_code'),
-                        ],
+                    ],
                     'Dimensions' => [
                         'Length' => ($item->item_options('length')) ? $item->item_options('length') : $this->plugin_settings('def_length'),
                         'Width' => ($item->item_options('width')) ? $item->item_options('width') : $this->plugin_settings('def_width'),
                         'Height' => ($item->item_options('height')) ? $item->item_options('height') : $this->plugin_settings('def_height'),
                         'Units' => $this->plugin_settings('length_code'),
-                        ],
-                    ];
+                    ],
+                ];
             $count++;
         }
 
@@ -571,19 +571,19 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
                 }
             } else {
                 $shipping = [
-                        'error_message' => $this->build_errors($response->Notifications),
-                        'price' => [],
-                        'option_value' => [],
-                        'option_name' => [],
-                    ];
-            }
-        } catch (SoapFault $exception) {
-            $shipping = [
-                    'error_message' => $exception->faultcode . ' ' . $exception->faultstring . ' ' . $this->build_faults($exception),
+                    'error_message' => $this->build_errors($response->Notifications),
                     'price' => [],
                     'option_value' => [],
                     'option_name' => [],
                 ];
+            }
+        } catch (SoapFault $exception) {
+            $shipping = [
+                'error_message' => $exception->faultcode . ' ' . $exception->faultstring . ' ' . $this->build_faults($exception),
+                'price' => [],
+                'option_value' => [],
+                'option_name' => [],
+            ];
         }
 
         // CHECKING THE PRESELECTED OPTIONS THAT ARE AVAILABLE
@@ -703,8 +703,7 @@ class Cartthrob_shipping_fedex extends CartThrob_shipping
                     $errors .= $notes->LocalizedMessage;
                 }
             }
-        }
-        // handles multiple errors
+        } // handles multiple errors
         else {
             foreach ($notes as $noteKey => $note) {
                 $errors .= $this->build_errors($note);
