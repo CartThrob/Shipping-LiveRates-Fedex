@@ -1,0 +1,12 @@
+{
+    "name": "cartthrob/live-rates-fedex",
+    "description": "Request live shipping rates from FedEx for CartThrob",
+    "type": "library",
+    "require": {
+        "jeremy-dunn/php-fedex-api-wrapper": "^3.0"
+    },
+    "license": "MIT",
+    "config": {
+        "vendor-dir": "cartthrob/third_party/shipping_plugins/vendor"
+    }
+}
