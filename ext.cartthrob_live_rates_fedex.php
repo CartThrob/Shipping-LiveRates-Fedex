@@ -59,9 +59,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         ee()->load->remove_package_path(PATH_THIRD . 'cartthrob/');
     }
 
-    /**
-     * @return array
-     */
     public function settings(): array
     {
         ee()->load->library('locales');
@@ -170,8 +167,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
     }
 
     /**
-     * @param array $items
-     * @return array
      * @throws ShippingRateException
      */
     public function getLiveRates(array $items): array
@@ -201,8 +196,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
     }
 
     /**
-     * @param Cartthrob_cart $cart
-     * @return Money
      * @throws ShippingRateException
      */
     public function rate(Cartthrob_cart $cart): Money
@@ -268,19 +261,12 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         return $shippingOptions;
     }
 
-    /**
-     * @return bool
-     */
     private function configIsSetup(): bool
     {
         return $this->getSetting('fedex_api_key') && $this->getSetting('fedex_account_number')
             && $this->getSetting('fedex_password') && $this->getSetting('fedex_meter_number');
     }
 
-    /**
-     * @param array $items
-     * @return RateRequest
-     */
     private function prepareRequest(array $items): RateRequest
     {
         ee()->load->library('cartthrob_shipping_plugins');
@@ -360,8 +346,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
     }
 
     /**
-     * @param array $items
-     * @return Collection
      * @throws ShippingRateException
      */
     private function makeRequest(array $items): Collection
@@ -402,17 +386,13 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
                 }
             }
         } catch (SoapFault $e) {
-            throw new ShippingRateException(
-                sprintf('%s %s :: %s', $e->faultcode, $e->faultstring, $e->detail->desc)
-            );
+            throw new ShippingRateException(sprintf('%s %s :: %s', $e->faultcode, $e->faultstring, $e->detail->desc));
         }
 
         return $data;
     }
 
     /**
-     * @param Cartthrob_cart $cart
-     * @param array $shippingData
      * @return mixed
      */
     private function setShippingOption(Cartthrob_cart $cart, array $shippingData)
@@ -440,7 +420,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
     }
 
     /**
-     * @param array $shippingData
      * @param $shippingOption
      * @return mixed
      */
