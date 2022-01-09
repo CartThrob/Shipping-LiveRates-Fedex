@@ -1,31 +1,35 @@
-cartthrob-live-rates
-================================
+# cartthrob_shipping_fedex (Live Rates)
 
-If you are looking for support for EE2, try the [EE2 branch](https://github.com/CartThrob/Shipping-LiveRates-Fedex/tree/EE2).
+----
 
-If you are looking for support for EE3, try the [EE3 branch](https://github.com/CartThrob/Shipping-LiveRates-Fedex/tree/EE3).
+## Requirements
+* CartThrob 6+
+* PHP 7.4+
 
-**Requirements:**
-* CartThrob 4+
-* PHP 7.1+
+## Installation
+Download the add-on and unzip its contents.
 
-**Directions:**
-To implement live rates shipping plugins place them in your cartthrob folder in the following locations:  
+Upload the add-on’s folder to your system/user/addons/ folder.
 
-Plugins:
-_system/user/addons/cartthrob/third_party/shipping_plugins_
+Once the add-on is uploaded, you should see it listed in the Add-on Manager in your ExpressionEngine Control Panel. You can then click install!
 
-Language Files: 
-_system/user/addons/cartthrob/third_party/shipping_plugins_
+## Usage and Implementation
+Once installed, the FedEx Live Rates Add-On will be available within the CartThrob -> Shipping settings screen.
 
-Also, please review the included sample template code, as well as the information on the following pages: 
-
-https://cartthrob.com/docs/tags_detail/get_live_rates_form/index.html
-https://cartthrob.com/docs/tags_detail/get_shipping_options/
+Please review the included sample template code, as well as the information on the following pages: 
+* https://cartthrob.com/docs/tags_detail/get_live_rates_form/index.html
+* https://cartthrob.com/docs/tags_detail/get_shipping_options/
 
 These 2 pages explain how to use live rates plugins, and explain a little bit about using live rates in general. No matter what system you use any time you use dynamically generated rates gathered directly from a shipping company you will be required to provide large amounts of detail to those shippers in order to get accurate shipping quotes.
 
-The included plugins can be used as a starting point for developing your own live rates systems tailored specifically to your customers specifications. Almost every implementation of an accurate live rates system requires customization to your clients specifications.
+The included plugins can be used as a starting point for developing your own live rates systems tailored specifically to your customers specifications. Almost every implementation of an accurate live rates system requires customization to your client's specifications.
 
-**Support:**
+## Legacy Branches
+* [EE2 branch](https://github.com/CartThrob/Shipping-LiveRates-Fedex/tree/EE2).
+* [EE3 branch](https://github.com/CartThrob/Shipping-LiveRates-Fedex/tree/EE3).
+* [EE5 branch](https://github.com/CartThrob/Shipping-LiveRates-Fedex/tree/EE5).
+
+---
+
+## Support
 Please note, modifications and support for these plugins are not included in the standard CartThrob purchase. This plugin is provided as-is at no cost with no warranty expressed or implied. Support is not included.
