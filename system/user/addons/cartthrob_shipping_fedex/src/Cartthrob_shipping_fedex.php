@@ -4,8 +4,8 @@ if (!defined('CARTTHROB_PATH')) {
     exit('No direct script access allowed');
 }
 
-use CartThrob\Plugins\Shipping\ShippingPlugin;
 use CartThrob\Plugins\Exceptions\ShippingRateException;
+use CartThrob\Plugins\Shipping\ShippingPlugin;
 use FedEx\RateService\ComplexType\Money as FedexMoney;
 use FedEx\RateService\ComplexType\Payor;
 use FedEx\RateService\ComplexType\RateRequest;
@@ -20,9 +20,13 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
 {
     // ExpressionEngine Properties
     public $title = 'CartThrob - Shipping - FedEx Live Rates';
-    public $version = '2.0.0';
-    public $description = 'Provide calculated shipping rates for FedEx';
-    public $settings_exist = 'y';
+    public string $version = '2.0.0';
+    public string $description = 'Provide calculated shipping rates for FedEx';
+    public string $settings_exist = 'y';
+
+    // CartThrob Properties
+    public $short_title = 'fedex_short_title';
+    public $overview = 'fedex_overview';
 
     public $settings = [
         [
@@ -69,14 +73,308 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
                 'CM' => 'Centimeters',
             ],
         ],
+        [
+            'name' => 'fedex_weight_code',
+            'short_name' => 'fedex_weight_code',
+            'default' => 'LB',
+            'type' => 'radio',
+            'options' => [
+                'LB' => 'Pounds',
+                'KG' => 'Kilograms',
+            ],
+        ],
+        [
+            'name' => 'fedex_rate_chart',
+            'short_name' => 'fedex_rate_chart',
+            'default' => 'REGULAR_PICKUP',
+            'type' => 'radio',
+            'options' => [
+                'REGULAR_PICKUP' => 'fedex_regular_pickup',
+                'REQUEST_COURIER' => 'fedex_request_courier',
+                'BUSINESS_SERVICE_CENTER' => 'fedex_business_service_center',
+                'STATION' => 'fedex_station',
+            ],
+        ],
+        [
+            'name' => 'fedex_origination_address',
+            'short_name' => 'fedex_origination_address',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_origination_address2',
+            'short_name' => 'fedex_origination_address2',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_origination_city',
+            'short_name' => 'fedex_origination_city',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_origination_state',
+            'short_name' => 'fedex_origination_state',
+            'type' => 'text',
+            'default' => '',
+//            'options' => [
+//
+//            ] // ee()->locales->states($this->getSetting('fedex_origination_country_code'))
+        ],
+        [
+            'name' => 'fedex_origination_zip',
+            'short_name' => 'fedex_origination_zip',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_origination_country_code',
+            'short_name' => 'fedex_origination_country_code',
+            'type' => 'select',
+            'default' => 'USA',
+            'options' => [
+                'CAN' => 'Canada',
+                'USA' => 'United States',
+            ],
+        ],
+        [
+            'name' => 'fedex_product_id',
+            'short_name' => 'fedex_product_id',
+            'type' => 'select',
+            'default' => 'GROUND_HOME_DELIVERY',
+            'options' => [
+                'FEDEX_GROUND' => 'fedex_ground',
+                'PRIORITY_OVERNIGHT' => 'fedex_priority_overnight',
+                'STANDARD_OVERNIGHT' => 'fedex_standard_overnight',
+                'FEDEX_2_DAY' => 'fedex_2_day',
+                'FEDEX_EXPRESS_SAVER' => 'fedex_express_saver',
+                'FIRST_OVERNIGHT' => 'fedex_first_overnight',
+                'GROUND_HOME_DELIVERY' => 'fedex_ground_home_delivery',
+                'INTERNATIONAL_ECONOMY' => 'fedex_international_economy',
+                'INTERNATIONAL_FIRST' => 'fedex_international_first',
+                'INTERNATIONAL_GROUND' => 'fedex_international_ground',
+                'INTERNATIONAL_PRIORITY' => 'fedex_international_priority',
+                'EUROPE_FIRST_INTERNATIONAL_PRIORITY' => 'fedex_europe_first_international_priority',
+            ],
+        ],
+        [
+            'name' => 'fedex_container',
+            'short_name' => 'fedex_container',
+            'type' => 'select',
+            'default' => 'YOUR_PACKAGING',
+            'options' => [
+                'YOUR_PACKAGING' => 'fedex_package',
+                'FEDEX_BOX' => 'fedex_box',
+                'FEDEX_TUBE' => 'fedex_tube',
+                'FEDEX_PAK' => 'fedex_pak',
+                'FEDEX_25KG_BOX' => 'fedex_25kg_box',
+                'FEDEX_10KG_BOX' => 'fedex_10kg_box',
+                'FEDEX_ENVELOPE' => 'fedex_envelope',
+            ],
+        ],
+        [
+            'name' => 'fedex_insurance_default',
+            'short_name' => 'fedex_insurance_default',
+            'type' => 'text',
+            'default' => '100',
+        ],
+        [
+            'name' => 'fedex_insurance_currency',
+            'short_name' => 'fedex_insurance_currency',
+            'type' => 'text',
+            'default' => 'USD',
+        ],
+        [
+            'name' => 'fedex_origination_res_com',
+            'short_name' => 'fedex_origination_res_com',
+            'type' => 'radio',
+            'default' => 'RES',
+            'options' => [
+                'RES' => 'fedex_res',
+                'COM' => 'fedex_com',
+            ],
+        ],
+        [
+            'name' => 'fedex_destination_res_com',
+            'short_name' => 'fedex_destination_res_com',
+            'type' => 'radio',
+            'default' => 'RES',
+            'options' => [
+                'RES' => 'fedex_res',
+                'COM' => 'fedex_com',
+            ],
+        ],
+        [
+            'name' => 'fedex_def_length',
+            'short_name' => 'fedex_def_length',
+            'type' => 'text',
+            'default' => 15,
+        ],
+        [
+            'name' => 'fedex_def_width',
+            'short_name' => 'fedex_def_width',
+            'type' => 'text',
+            'default' => 15,
+        ],
+        [
+            'name' => 'fedex_def_height',
+            'short_name' => 'fedex_def_height',
+            'type' => 'text',
+            'default' => 15,
+        ],
+        [
+            'name' => 'fedex_sp_ancillary_services',
+            'short_name' => 'fedex_sp_ancillary_services',
+            'type' => 'select',
+            'default' => '',
+            'options' => [
+                '' => 'fedex_none',
+                'ADDRESS_CORRECTION' => 'fedex_address_correction',
+                'CARRIER_LEAVE_IF_NO_RESPONSE' => 'fedex_carrier_leave_if_no_response',
+                'CHANGE_SERVICE' => 'fedex_change_service',
+                'FORWARDING_SERVICE' => 'fedex_forwarding_service',
+                'RETURN_SERVICE' => 'fedex_return_service',
+            ],
+        ],
+        [
+            'name' => 'fedex_sp_indicia',
+            'short_name' => 'fedex_sp_indicia',
+            'type' => 'select',
+            'default' => '',
+            'options' => [
+                '' => 'fedex_none',
+                'MEDIA_MAIL' => 'fedex_media_mail',
+                'PARCEL_RETURN' => 'fedex_parcel_return',
+                'PARCEL_SELECT' => 'fedex_parcel_select',
+                'PRESORTED_BOUND_PRINTED_MATTER' => 'fedex_presorted_bound_printed_matter',
+                'PRESORTED_STANDARD' => 'fedex_presorted_standard',
+            ],
+        ],
+        [
+            'name' => 'fedex_ground',
+            'short_name' => 'fedex_ground',
+            'type' => 'radio',
+            'default' => 'y',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_priority_overnight',
+            'short_name' => 'fedex_priority_overnight',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_standard_overnight',
+            'short_name' => 'fedex_standard_overnight',
+            'type' => 'radio',
+            'default' => 'y',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_2_day',
+            'short_name' => 'fedex_2_day',
+            'type' => 'radio',
+            'default' => 'y',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_express_saver',
+            'short_name' => 'fedex_express_saver',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_first_overnight',
+            'short_name' => 'fedex_first_overnight',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_ground_home_delivery',
+            'short_name' => 'fedex_ground_home_delivery',
+            'type' => 'radio',
+            'default' => 'y',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_international_economy',
+            'short_name' => 'fedex_international_economy',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_international_first',
+            'short_name' => 'fedex_international_first',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_international_ground',
+            'short_name' => 'fedex_international_ground',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_international_priority',
+            'short_name' => 'fedex_international_priority',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
+        [
+            'name' => 'fedex_europe_first_international_priority',
+            'short_name' => 'fedex_europe_first_international_priority',
+            'type' => 'radio',
+            'default' => 'n',
+            'options' => [
+                'n' => 'No',
+                'y' => 'Yes',
+            ],
+        ],
     ];
 
-    // CartThrob Properties
-    public $short_title = 'fedex_short_title';
-    public $overview = 'fedex_overview';
-
     // Internal Properties
-    private $shipping_methods = [
+    private array $shipping_methods = [
         'FEDEX_GROUND' => 'Ground',
         'PRIORITY_OVERNIGHT' => 'Priority Overnight',
         'STANDARD_OVERNIGHT' => 'Standard Overnight',
@@ -93,109 +391,7 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
 
     public function settings($key, $default = null): array
     {
-        ee()->load->library('locales');
-
-        $settings = [];
-
-//        $settings['fedex_api_key'] = ['i', '', ''];
-//        $settings['fedex_account_number'] = ['i', '', ''];
-//        $settings['fedex_meter_number'] = ['i', '', ''];
-//        $settings['fedex_password'] = ['i', '', ''];
-//        $settings['fedex_mode'] = ['r', ['dev' => 'dev', 'live' => 'live'], 'dev'];
-        $settings['fedex_length_code'] = ['r', ['IN' => 'Inches', 'CM' => 'Centimeters'], 'IN'];
-        $settings['fedex_weight_code'] = ['r', ['LB' => 'Pounds', 'KG' => 'Kilograms'], 'LB'];
-        $settings['fedex_rate_chart'] = [
-            'r',
-            [
-                'REGULAR_PICKUP' => 'fedex_regular_pickup',
-                'REQUEST_COURIER' => 'fedex_request_courier',
-                'BUSINESS_SERVICE_CENTER' => 'fedex_business_service_center',
-                'STATION' => 'fedex_station',
-            ],
-            'REGULAR_PICKUP',
-        ];
-        $settings['fedex_origination_address'] = ['i', '', ''];
-        $settings['fedex_origination_address2'] = ['i', '', ''];
-        $settings['fedex_origination_city'] = ['i', '', ''];
-        $settings['fedex_origination_state'] = ['s', ee()->locales->states($this->getSetting('fedex_origination_country_code')), ''];
-        $settings['fedex_origination_zip'] = ['i', '', ''];
-        $settings['fedex_origination_country_code'] = ['s', ['CAN' => 'Canada', 'USA' => 'United States'], 'USA'];
-        $settings['fedex_product_id'] = [
-            's',
-            [
-                'FEDEX_GROUND' => 'fedex_ground',
-                'PRIORITY_OVERNIGHT' => 'fedex_priority_overnight',
-                'STANDARD_OVERNIGHT' => 'fedex_standard_overnight',
-                'FEDEX_2_DAY' => 'fedex_2_day',
-                'FEDEX_EXPRESS_SAVER' => 'fedex_express_saver',
-                'FIRST_OVERNIGHT' => 'fedex_first_overnight',
-                'GROUND_HOME_DELIVERY' => 'fedex_ground_home_delivery',
-                'INTERNATIONAL_ECONOMY' => 'fedex_international_economy',
-                'INTERNATIONAL_FIRST' => 'fedex_international_first',
-                'INTERNATIONAL_GROUND' => 'fedex_international_ground',
-                'INTERNATIONAL_PRIORITY' => 'fedex_international_priority',
-                'EUROPE_FIRST_INTERNATIONAL_PRIORITY' => 'fedex_europe_first_international_priority',
-            ],
-            'GROUND_HOME_DELIVERY',
-        ];
-        $settings['fedex_container'] = [
-            's',
-            [
-                'YOUR_PACKAGING' => 'fedex_package',
-                'FEDEX_BOX' => 'fedex_box',
-                'FEDEX_TUBE' => 'fedex_tube',
-                'FEDEX_PAK' => 'fedex_pak',
-                'FEDEX_25KG_BOX' => 'fedex_25kg_box',
-                'FEDEX_10KG_BOX' => 'fedex_10kg_box',
-                'FEDEX_ENVELOPE' => 'fedex_envelope',
-            ],
-            'YOUR_PACKAGING',
-        ];
-        $settings['fedex_insurance_default'] = ['i', '', '100'];
-        $settings['fedex_insurance_currency'] = ['i', '', 'USD'];
-        $settings['fedex_origination_res_com'] = ['r', ['RES' => 'fedex_res', 'COM' => 'fedex_com'], 'RES'];
-        $settings['fedex_destination_res_com'] = ['r', ['RES' => 'fedex_res', 'COM' => 'fedex_com'], 'RES'];
-        $settings['fedex_def_length'] = ['i', '', '15'];
-        $settings['fedex_def_width'] = ['i', '', '15'];
-        $settings['fedex_def_height'] = ['i', '', '15'];
-        $settings['fedex_sp_ancillary_services'] = [
-            's',
-            [
-                '' => 'fedex_none',
-                'ADDRESS_CORRECTION' => 'fedex_address_correction',
-                'CARRIER_LEAVE_IF_NO_RESPONSE' => 'fedex_carrier_leave_if_no_response',
-                'CHANGE_SERVICE' => 'fedex_change_service',
-                'FORWARDING_SERVICE' => 'fedex_forwarding_service',
-                'RETURN_SERVICE' => 'fedex_return_service',
-            ],
-            '',
-        ];
-        $settings['fedex_sp_indicia'] = [
-            's',
-            [
-                '' => 'fedex_none',
-                'MEDIA_MAIL' => 'fedex_media_mail',
-                'PARCEL_RETURN' => 'fedex_parcel_return',
-                'PARCEL_SELECT' => 'fedex_parcel_select',
-                'PRESORTED_BOUND_PRINTED_MATTER' => 'fedex_presorted_bound_printed_matter',
-                'PRESORTED_STANDARD' => 'fedex_presorted_standard',
-            ],
-            '',
-        ];
-        $settings['fedex_ground'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'y'];
-        $settings['fedex_priority_overnight'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_standard_overnight'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'y'];
-        $settings['fedex_2_day'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'y'];
-        $settings['fedex_express_saver'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_first_overnight'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_ground_home_delivery'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'y'];
-        $settings['fedex_international_economy'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_international_first'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_international_ground'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_international_priority'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-        $settings['fedex_europe_first_international_priority'] = ['r', ['n' => 'No', 'y' => 'Yes'], 'n'];
-
-        return $settings;
+        return $this->settings;
     }
 
     /**
