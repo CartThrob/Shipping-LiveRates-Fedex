@@ -6,6 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
+    'Psr\\Container\\' => array($vendorDir . '/psr/container/src'),
+    'Illuminate\\Support\\' => array($vendorDir . '/illuminate/collections', $vendorDir . '/illuminate/macroable'),
+    'Illuminate\\Contracts\\' => array($vendorDir . '/illuminate/contracts'),
     'FedEx\\Utility\\' => array($vendorDir . '/jeremy-dunn/php-fedex-api-wrapper/util'),
     'FedEx\\Tests\\' => array($vendorDir . '/jeremy-dunn/php-fedex-api-wrapper/tests/FedEx/Tests'),
     'FedEx\\' => array($vendorDir . '/jeremy-dunn/php-fedex-api-wrapper/src/FedEx'),

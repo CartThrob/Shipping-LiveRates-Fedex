@@ -2,9 +2,20 @@
     "name": "cartthrob/live-rates-fedex",
     "description": "Request live shipping rates from FedEx for CartThrob",
     "type": "library",
+    "authors": [
+        {
+            "name": "Foster Made",
+            "email": "support@cartthrob.com"
+        }
+    ],
     "require": {
         "ext-soap": "*",
-        "jeremy-dunn/php-fedex-api-wrapper": "^3.0"
+        "jeremy-dunn/php-fedex-api-wrapper": "^3.0",
+        "illuminate/collections": "^8.78"
     },
-    "license": "MIT"
+    "autoload": {
+        "classmap": [
+            "src/Cartthrob_shipping_fedex.php"
+        ]
+    }
 }

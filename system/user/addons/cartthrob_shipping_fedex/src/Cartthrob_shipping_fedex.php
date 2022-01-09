@@ -1,7 +1,11 @@
 <?php
 
-use CartThrob\Plugins\Exceptions\ShippingRateException;
+if (!defined('CARTTHROB_PATH')) {
+    exit('No direct script access allowed');
+}
+
 use CartThrob\Plugins\Shipping\ShippingPlugin;
+use CartThrob\Plugins\Exceptions\ShippingRateException;
 use FedEx\RateService\ComplexType\Money as FedexMoney;
 use FedEx\RateService\ComplexType\Payor;
 use FedEx\RateService\ComplexType\RateRequest;
@@ -12,20 +16,60 @@ use FedEx\RateService\SimpleType\RateRequestType;
 use Illuminate\Support\Collection;
 use Money\Money;
 
-if (!defined('CARTTHROB_PATH')) {
-    exit('No direct script access allowed');
-}
-
-require PATH_THIRD . 'cartthrob/vendor/autoload.php';
-
-class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
+class Cartthrob_shipping_fedex extends ShippingPlugin
 {
     // ExpressionEngine Properties
     public $title = 'CartThrob - Shipping - FedEx Live Rates';
     public $version = '2.0.0';
     public $description = 'Provide calculated shipping rates for FedEx';
     public $settings_exist = 'y';
-    public $settings = [];
+
+    public $settings = [
+        [
+            'name' => 'fedex_api_key',
+            'short_name' => 'fedex_api_key',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_account_number',
+            'short_name' => 'fedex_account_number',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_meter_number',
+            'short_name' => 'fedex_meter_number',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_password',
+            'short_name' => 'fedex_password',
+            'type' => 'text',
+            'default' => '',
+        ],
+        [
+            'name' => 'fedex_mode',
+            'short_name' => 'fedex_mode',
+            'default' => 'dev',
+            'type' => 'radio',
+            'options' => [
+                'dev' => 'Dev',
+                'live' => 'Live',
+            ],
+        ],
+        [
+            'name' => 'fedex_length_code',
+            'short_name' => 'fedex_length_code',
+            'default' => 'IN',
+            'type' => 'radio',
+            'options' => [
+                'IN' => 'Inches',
+                'CM' => 'Centimeters',
+            ],
+        ],
+    ];
 
     // CartThrob Properties
     public $short_title = 'fedex_short_title';
@@ -47,29 +91,17 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         'EUROPE_FIRST_INTERNATIONAL_PRIORITY' => 'Europe First International Priority',
     ];
 
-    public function __construct($settings = '')
-    {
-        ee()->load->add_package_path(PATH_THIRD . 'cartthrob/');
-
-        parent::__construct($settings);
-    }
-
-    public function __destruct()
-    {
-        ee()->load->remove_package_path(PATH_THIRD . 'cartthrob/');
-    }
-
-    public function settings(): array
+    public function settings($key, $default = null): array
     {
         ee()->load->library('locales');
 
         $settings = [];
 
-        $settings['fedex_api_key'] = ['i', '', ''];
-        $settings['fedex_account_number'] = ['i', '', ''];
-        $settings['fedex_meter_number'] = ['i', '', ''];
-        $settings['fedex_password'] = ['i', '', ''];
-        $settings['fedex_mode'] = ['r', ['dev' => 'dev', 'live' => 'live'], 'dev'];
+//        $settings['fedex_api_key'] = ['i', '', ''];
+//        $settings['fedex_account_number'] = ['i', '', ''];
+//        $settings['fedex_meter_number'] = ['i', '', ''];
+//        $settings['fedex_password'] = ['i', '', ''];
+//        $settings['fedex_mode'] = ['r', ['dev' => 'dev', 'live' => 'live'], 'dev'];
         $settings['fedex_length_code'] = ['r', ['IN' => 'Inches', 'CM' => 'Centimeters'], 'IN'];
         $settings['fedex_weight_code'] = ['r', ['LB' => 'Pounds', 'KG' => 'Kilograms'], 'LB'];
         $settings['fedex_rate_chart'] = [
@@ -213,6 +245,10 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         return $this->prepareMoney($shippingData, $shippingOption);
     }
 
+    /**
+     * @param $notifications
+     * @return string
+     */
     public function buildErrors($notifications)
     {
         $errors = '';
@@ -234,8 +270,11 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         return $errors;
     }
 
-    // END
-
+    /**
+     * @param $number
+     * @param $prefix
+     * @return array|string
+     */
     public function shippingMethods($number = null, $prefix = null)
     {
         $shippingOptions = [];
@@ -345,9 +384,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         return $rateRequest;
     }
 
-    /**
-     * @throws ShippingRateException
-     */
     private function makeRequest(array $items): Collection
     {
         $data = new Collection([
@@ -419,10 +455,6 @@ class Cartthrob_live_rates_fedex_ext extends ShippingPlugin
         return $shippingOption;
     }
 
-    /**
-     * @param $shippingOption
-     * @return mixed
-     */
     private function prepareMoney(array $shippingData, $shippingOption): Money
     {
         if (!$shippingOption || empty($shippingData['option_value']) || empty($shippingData['price'])) {

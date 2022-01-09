@@ -6,7 +6,21 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitde66d87f04ea33c90862443f207774c2
 {
+    public static $files = array (
+        '60799491728b879e74601d83e38b2cad' => __DIR__ . '/..' . '/illuminate/collections/helpers.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
+        'P' => 
+        array (
+            'Psr\\SimpleCache\\' => 16,
+            'Psr\\Container\\' => 14,
+        ),
+        'I' => 
+        array (
+            'Illuminate\\Support\\' => 19,
+            'Illuminate\\Contracts\\' => 21,
+        ),
         'F' => 
         array (
             'FedEx\\Utility\\' => 14,
@@ -16,6 +30,23 @@ class ComposerStaticInitde66d87f04ea33c90862443f207774c2
     );
 
     public static $prefixDirsPsr4 = array (
+        'Psr\\SimpleCache\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/simple-cache/src',
+        ),
+        'Psr\\Container\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/psr/container/src',
+        ),
+        'Illuminate\\Support\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/collections',
+            1 => __DIR__ . '/..' . '/illuminate/macroable',
+        ),
+        'Illuminate\\Contracts\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/illuminate/contracts',
+        ),
         'FedEx\\Utility\\' => 
         array (
             0 => __DIR__ . '/..' . '/jeremy-dunn/php-fedex-api-wrapper/util',
@@ -30,11 +61,17 @@ class ComposerStaticInitde66d87f04ea33c90862443f207774c2
         ),
     );
 
+    public static $classMap = array (
+        'Cartthrob_shipping_fedex' => __DIR__ . '/../..' . '/src/Cartthrob_shipping_fedex.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInitde66d87f04ea33c90862443f207774c2::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInitde66d87f04ea33c90862443f207774c2::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInitde66d87f04ea33c90862443f207774c2::$classMap;
 
         }, null, ClassLoader::class);
     }
