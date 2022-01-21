@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>shipping</title>
+    <g id="shipping" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#FFF4D7" cx="21" cy="21" r="20"></circle>
+        <path d="M11.5305349,2.64763763 C13.5512866,1.76910802 15.859957,1.46950967 18.3820718,1.92842641 C24.366018,3.01724796 29.6207111,4.8357038 33.5796086,8.27357825 C36.9474998,11.1982277 39.3664713,15.2969557 40.5094354,21.0966767 C41.6362674,26.814539 39.9053182,31.3682104 36.6567146,34.6168141 C32.7989157,38.474613 26.8326613,40.5 21,40.5 C15.8600398,40.5 12.2990473,39.3425691 9.67327435,36.8355075 C6.79936701,34.0915296 5.04519845,29.7680463 3.509747,23.7148063 C1.99435918,17.7406634 3.11069908,11.5809808 6.06835565,7.29164439 C7.49120001,5.2281668 9.34098116,3.59955458 11.5305349,2.64763763 Z" id="Oval" stroke="#182E3C"></path>
+        <rect id="Rectangle" x="0" y="0" width="42" height="42"></rect>
+        <g id="Group" stroke-linecap="square" transform="translate(11.000000, 13.000000)" stroke="#182E3C" stroke-width="1.25">
+            <polyline id="Path" stroke-linecap="round" stroke-linejoin="round" points="19.575 14.2375 22.95 14.2375 22.95 8.8375 20.25 7.4875 18.225 2.0875 12.15 2.0875 12.15 14.2375 14.175 14.2375"></polyline>
+            <circle id="Oval" stroke-linecap="round" cx="16.875" cy="14.2375" r="2.7"></circle>
+            <path d="M11.5,0 C11.7761424,-5.07265313e-17 12,0.223857625 12,0.5 L12,14.5 C12,14.7761424 11.7761424,15 11.5,15 L8.46549895,15.0011259 C8.13607818,16.1204219 7.10095849,16.9375 5.875,16.9375 C4.64904151,16.9375 3.61392182,16.1204219 3.28450105,15.0011259 L0.5,15 C0.223857625,15 3.38176876e-17,14.7761424 0,14.5 L0,0.5 C-3.38176876e-17,0.223857625 0.223857625,5.07265313e-17 0.5,0 L11.5,0 Z" id="Combined-Shape" stroke-linecap="round"></path>
+            <circle id="Oval-Copy" stroke-linecap="round" cx="5.875" cy="14.2375" r="2.7"></circle>
+            <polyline id="Path" stroke-linecap="round" stroke-linejoin="round" points="14.85 4.7875 14.85 7.4875 17.55 7.4875"></polyline>
+        </g>
+    </g>
+</svg>
