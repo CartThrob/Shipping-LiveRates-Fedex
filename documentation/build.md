@@ -6,7 +6,7 @@
         * MAJOR version when you make incompatible API changes
         * MINOR version when you add functionality in a backwards-compatible manner
         * PATCH version when you make backwards-compatible bug fixes. A PATCH number should be excluded if it equals '0'
-    * Update `CARTTHROB_SHIPPING_FEDEX_NAME` constant in `system/user/addons/cartthrob_shipping_fedex/addon.setup.php`
+    * Update `CARTTHROB_SHIPPING_FEDEX_VERSION` constant in `system/user/addons/cartthrob_shipping_fedex/addon.setup.php`
     * `$ git commit -am "Bumping version"`
 3. Merge `develop` branch into `main` branch
     * `$ git checkout develop && git pull origin develop && git push origin develop`
