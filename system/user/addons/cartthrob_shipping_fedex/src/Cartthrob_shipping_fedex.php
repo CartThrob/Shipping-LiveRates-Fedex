@@ -673,4 +673,22 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
 
         return $minPrice;
     }
+
+    public function plugin_shipping_options(): array
+    {
+        $items = ee()->cartthrob->cart->items();
+        $shipping_data = $this->getLiveRates($items);
+        if (!empty($shipping_data['option_value'] ))
+        {
+            foreach ($shipping_data['option_value'] as $key => $value)
+            {
+                $options[] = array(
+                    'rate_short_name' => $value,
+                    'price' => $shipping_data['price'][$key],
+                    'rate_price' => $shipping_data['price'][$key],
+                    'rate_title' => $shipping_data['option_name'][$key],
+                );
+            }
+        }
+    }
 }
