@@ -3,7 +3,7 @@
 ----
 
 ## Requirements
-* CartThrob 6+
+* CartThrob 6.2.1+
 * PHP 7.4+
 
 ## Installation
