@@ -691,20 +691,4 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
             }
         }
     }
-
-    /**
-     * @param $key
-     * @param bool $default
-     * @return array|bool|mixed
-     */
-    public function getSetting($key, $default = false)
-    {
-        $settings = $this->core->store->config(get_class($this) . '_settings');
-
-        if ($key === false) {
-            return ($settings) ? $settings : $default;
-        }
-
-        return (isset($settings[$key])) ? $settings[$key] : $default;
-    }
 }
