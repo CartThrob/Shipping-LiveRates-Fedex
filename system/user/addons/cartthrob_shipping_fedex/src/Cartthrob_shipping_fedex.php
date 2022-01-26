@@ -563,7 +563,6 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
         $rateRequest->RequestedShipment->RateRequestTypes = [RateRequestType::_LIST];
         $rateRequest->RequestedShipment->PackageCount = count($items);
         $rateRequest->RequestedShipment->RequestedPackageLineItems = array_fill(0, count($items), new RequestedPackageLineItem());
-
         $count = 0;
         foreach ($items as $key => $item) {
             $rateRequest->RequestedShipment->RequestedPackageLineItems[$count]->Weight->Value = ($item->weight() > 0 ? $item->weight() : 1) * $item->quantity();
@@ -572,7 +571,7 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
             $rateRequest->RequestedShipment->RequestedPackageLineItems[$count]->Dimensions->Width = !empty($item->item_options('width')) ? $item->item_options('length') : $this->getSetting('fedex_def_width');
             $rateRequest->RequestedShipment->RequestedPackageLineItems[$count]->Dimensions->Height = !empty($item->item_options('height')) ? $item->item_options('length') : $this->getSetting('fedex_def_height');
             $rateRequest->RequestedShipment->RequestedPackageLineItems[$count]->Dimensions->Units = $this->getSetting('fedex_length_code');
-            $rateRequest->RequestedShipment->RequestedPackageLineItems[$count]->GroupPackageCount = $count + 1;
+            $rateRequest->RequestedShipment->RequestedPackageLineItems[$count]->GroupPackageCount = 1;
 
             $count++;
         }
@@ -591,7 +590,7 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
         try {
             $rateServiceRequest = new Request();
             $rateServiceRequest->getSoapClient()->__setLocation(
-                $this->getSetting('fedex_mode', true) ? Request::TESTING_URL : Request::PRODUCTION_URL
+                $this->getSetting('fedex_mode') == 'live' ? Request::PRODUCTION_URL : Request::TESTING_URL
             );
 
             $response = $rateServiceRequest->getGetRatesReply($this->prepareRequest($items));
@@ -676,6 +675,7 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
 
     public function plugin_shipping_options(): array
     {
+        //return [];
         $items = ee()->cartthrob->cart->items();
         $shipping_data = $this->getLiveRates($items);
         if (!empty($shipping_data['option_value'] ))
@@ -690,5 +690,21 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
                 );
             }
         }
+    }
+
+    /**
+     * @param $key
+     * @param bool $default
+     * @return array|bool|mixed
+     */
+    public function getSetting($key, $default = false)
+    {
+        $settings = $this->core->store->config(get_class($this) . '_settings');
+
+        if ($key === false) {
+            return ($settings) ? $settings : $default;
+        }
+
+        return (isset($settings[$key])) ? $settings[$key] : $default;
     }
 }
