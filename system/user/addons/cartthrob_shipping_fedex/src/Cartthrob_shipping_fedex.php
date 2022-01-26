@@ -675,20 +675,21 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
 
     public function plugin_shipping_options(): array
     {
-        //return [];
+        $options = [];
+
         $items = ee()->cartthrob->cart->items();
         $shipping_data = $this->getLiveRates($items);
-        if (!empty($shipping_data['option_value'] ))
-        {
-            foreach ($shipping_data['option_value'] as $key => $value)
-            {
-                $options[] = array(
+        if (!empty($shipping_data['option_value'])) {
+            foreach ($shipping_data['option_value'] as $key => $value) {
+                $options[] = [
                     'rate_short_name' => $value,
-                    'price' => $shipping_data['price'][$key],
+                    'price' => ee('cartthrob:MoneyService')->toFloat($shipping_data['price'][$key]),
                     'rate_price' => $shipping_data['price'][$key],
                     'rate_title' => $shipping_data['option_name'][$key],
-                );
+                ];
             }
         }
+
+        return $options;
     }
 }
