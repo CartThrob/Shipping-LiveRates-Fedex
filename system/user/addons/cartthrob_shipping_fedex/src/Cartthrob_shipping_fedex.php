@@ -588,6 +588,7 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
         ]);
 
         try {
+
             $rateServiceRequest = new Request();
             $rateServiceRequest->getSoapClient()->__setLocation(
                 $this->getSetting('fedex_mode') == 'live' ? Request::PRODUCTION_URL : Request::TESTING_URL
@@ -617,7 +618,7 @@ class Cartthrob_shipping_fedex extends ShippingPlugin
                 }
             }
         } catch (SoapFault $e) {
-            throw new ShippingRateException(sprintf('%s %s :: %s', $e->faultcode, $e->faultstring, $e->detail->desc));
+            throw new ShippingRateException(sprintf('%s %s :: %s', $e->faultcode, $e->faultstring, $e->getMessage()));
         }
 
         return $data;
